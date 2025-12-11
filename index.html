@@ -1,37 +1,47 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Météo PWA</title>
-
-    <link rel="stylesheet" href="style.css">
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>MeteoR - Recherche</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4A90E2"> </head>
+    <link rel="stylesheet" href="style.css">
+</head>
 <body>
-<div class="container">
-    <header class="search-box">
-        <input type="text" autocomplete="off" class="search-input" placeholder="Entrez une ville..." />
-    </header>
+<main class="container">
+    <h1>MeteoR</h1>
 
-    <main class="weather-box">
-        <div class="location-details">
-            <div class="city">Recherchez une ville</div>
-            <div class="date">Jeudi 11 Décembre 2025</div>
+    <!-- Champ de recherche simple -->
+    <div class="search">
+        <input id="city-input" type="search" placeholder="Entrez une ville" aria-label="Ville">
+        <button id="search-btn">Rechercher</button>
+    </div>
+
+    <!-- Messages / chargement -->
+    <div id="loading" class="hidden">Chargement…</div>
+    <div id="error-message" class="error hidden" role="alert"></div>
+
+    <!-- Section résultats météo -->
+    <section id="weather-section" class="hidden results">
+        <div class="summary">
+            <div id="city-name" class="city">-</div>
+            <div class="temp-row">
+                <div id="weather-icon" class="icon">🌤️</div>
+                <div id="temperature" class="temp">--°C</div>
+            </div>
+            <div class="meta">
+                <div id="wind"></div>
+                <div id="humidity"></div>
+                <div id="feels-like"></div>
+            </div>
         </div>
 
-        <div class="current-weather">
-            <div class="temp">--°C</div>
-            <div class="weather">...</div>
-            <div class="hi-low">H:--°C / B:--°C</div>
+        <div class="hourly">
+            <h2>Prochaines heures</h2>
+            <div id="hourly-list" class="hourly-list"></div>
         </div>
-    </main>
-
-    <footer>
-        <p>Application Météo PWA</p>
-    </footer>
-</div>
+    </section>
+</main>
 
 <script src="app.js"></script>
 </body>
