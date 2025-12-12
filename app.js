@@ -23,20 +23,20 @@ const elements = {
     loading: document.getElementById('loading'),
     errorMessage: document.getElementById('error-message'),
     metaThemeColor: document.getElementById('meta-theme-color'),
-    //favoriteBtn: document.getElementById('favorite-btn'),
+    favoriteBtn: document.getElementById('favorite-btn'),
     favoritesList: document.getElementById('favorites-list'),
     noFavoritesMsg: document.getElementById('no-favorites')
 };
 
 // ===== État de l'application =====
 let currentCity = null;
-//let favorites = [];
+let favorites = [];
 
 // ===== Initialisation =====
 document.addEventListener('DOMContentLoaded', () => {
     registerServiceWorker();
     initTheme();
-    //loadFavorites();
+    loadFavorites();
 
     // Écouteurs UI
     elements.searchBtn?.addEventListener('click', handleSearch);
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     elements.themeToggle?.addEventListener('click', toggleTheme);
-    //elements.favoriteBtn?.addEventListener('click', toggleFavorite);
+    elements.favoriteBtn?.addEventListener('click', toggleFavorite);
 });
 
 // ===== Service Worker =====
@@ -58,46 +58,81 @@ async function registerServiceWorker() {
 }
 
 // ===== Gestion des Favoris =====
-//function loadFavorites() {
-//    const stored = localStorage.getItem(CONFIG.STORAGE_KEY_FAVORITES);
-//    if (stored) {
-//        try {
-//            favorites = JSON.parse(stored);
-//        } catch (e) {
-//            favorites = [];
-//        }
-//    }
-//    renderFavorites();
-//}
+function loadFavorites() {
+    const stored = localStorage.getItem(CONFIG.STORAGE_KEY_FAVORITES);
+    if (stored) {
+        try {
+            favorites = JSON.parse(stored);
+        } catch (e) {
+            favorites = [];
+        }
+    }
+    renderFavorites();
+}
 
-//function saveFavorites() {
-//    localStorage.setItem(CONFIG.STORAGE_KEY_FAVORITES, JSON.stringify(favorites));
-//    renderFavorites();
-//}
+function saveFavorites() {
+    localStorage.setItem(CONFIG.STORAGE_KEY_FAVORITES, JSON.stringify(favorites));
+    renderFavorites();
+}
 
-//function isFavorite(city) {
-//    if (!city) return false;
-//    return favorites.some(f => f.name === city.name);
-//}
+function isFavorite(city) {
+    if (!city) return false;
+    return favorites.some(f => f.name === city.name);
+}
 
-//function toggleFavorite() {
-//    if (!currentCity) return;
+function toggleFavorite() {
+    if (!currentCity) return;
 
-//    if (isFavorite(currentCity)) {
+    if (isFavorite(currentCity)) {
         // Supprimer
-//        favorites = favorites.filter(f => f.name !== currentCity.name);
-//        elements.favoriteBtn.textContent = '🤍';
-//        elements.favoriteBtn.classList.remove('active');
-//    } else {
+        favorites = favorites.filter(f => f.name !== currentCity.name);
+        elements.favoriteBtn.textContent = '🤍';
+        elements.favoriteBtn.classList.remove('active');
+    } else {
         // Ajouter
-//        favorites.push(currentCity);
-//        elements.favoriteBtn.textContent = '❤️';
-//        elements.favoriteBtn.classList.add('active');
-//    }
-//    saveFavorites();
-//}
+        favorites.push(currentCity);
+        elements.favoriteBtn.textContent = '❤️';
+        elements.favoriteBtn.classList.add('active');
+    }
+    saveFavorites();
+}
 
+function renderFavorites() {
+    elements.favoritesList.innerHTML = '';
 
+    if (favorites.length === 0) {
+        elements.noFavoritesMsg.classList.remove('hidden');
+    } else {
+        elements.noFavoritesMsg.classList.add('hidden');
+
+        favorites.forEach(city => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <span>${city.name.split(',')[0]}</span>
+                <button class="delete-fav" title="Supprimer">✕</button>
+            `;
+
+            // Clic sur le nom -> charge la ville
+            li.querySelector('span').addEventListener('click', () => {
+                loadFavoriteCity(city);
+            });
+
+            // Clic sur supprimer -> supprime le favori
+            li.querySelector('.delete-fav').addEventListener('click', (e) => {
+                e.stopPropagation();
+                favorites = favorites.filter(f => f.name !== city.name);
+                saveFavorites();
+                // Si c'est la ville en cours, reset l'icône
+                if (currentCity && currentCity.name === city.name) {
+                    elements.favoriteBtn.textContent = '🤍';
+                    elements.favoriteBtn.classList.remove('active');
+                }
+            });
+
+            elements.favoritesList.appendChild(li);
+        });
+    }
+}
 
 async function loadFavoriteCity(city) {
     elements.cityInput.value = city.name.split(',')[0];
