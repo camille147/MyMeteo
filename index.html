@@ -4,20 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MyMeteo</title>
-    <meta name="description" content="Application météo simple, rapide et optimisée pour mobile.">
+    <meta name="description" content="Application météo simple et rapide.">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#f6f9ff" id="meta-theme-color">
     <link rel="icon" href="icons/icon-192.png">
-
     <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
+
 <div class="main-wrapper">
+    <main class="weather-card">
 
-    <main class="weather-card" role="main">
-
-        <!-- En-tête -->
         <header class="app-header">
             <h1>MyMeteo</h1>
             <button id="theme-toggle"
@@ -27,11 +24,17 @@
             </button>
         </header>
 
-        <div class="search">
-            <input id="city-input" type="search" placeholder="Entrez une ville (ex: Paris)" aria-label="Ville">
-            <button id="search-btn">Rechercher</button>
-        </div>
+        <!-- Formulaire de recherche -->
+        <form class="search" id="search-form" autocomplete="off">
+            <label for="city-input" class="visually-hidden">Ville</label>
+            <input id="city-input"
+                   type="search"
+                   placeholder="Entrez une ville (ex: Paris)"
+                   aria-required="true">
+            <button id="search-btn" type="submit">Rechercher</button>
+        </form>
 
+        <!-- États (chargement / erreur) -->
         <div id="loading" class="hidden" role="status" aria-live="polite">
             Chargement…
         </div>
@@ -42,42 +45,37 @@
              aria-live="assertive">
         </div>
 
+        <!-- Résultats météo -->
         <section id="weather-section" class="hidden results" aria-live="polite">
 
             <div class="summary">
 
-                <h2 id="city-name" class="city">—</h2>
+                <div class="city-row">
+                    <div id="city-name" class="city">—</div>
+                </div>
 
                 <div class="temp-row">
                     <div id="weather-icon" class="icon" aria-hidden="true">🌤️</div>
                     <div id="temperature" class="temp">—°C</div>
                 </div>
 
-                <!-- Informations biométriques sous forme de liste de définitions -->
-                <dl class="meta">
-                    <div>
-                        <dt>Vent</dt>
-                        <dd id="wind">—</dd>
-                    </div>
-                    <div>
-                        <dt>Humidité</dt>
-                        <dd id="humidity">—</dd>
-                    </div>
-                    <div>
-                        <dt>Ressenti</dt>
-                        <dd id="feels-like">—</dd>
-                    </div>
-                </dl>
+                <div class="meta">
+                    <div id="wind">—</div>
+                    <div id="humidity">—</div>
+                    <div id="feels-like">—</div>
+                </div>
             </div>
 
             <div class="hourly">
-                <h3>Prochaines heures</h3>
+                <h2>Prochaines heures</h2>
                 <div id="hourly-list" class="hourly-list"></div>
             </div>
+
         </section>
     </main>
-
 </div>
+
+<script src="app.js" defer></script>
 
 
 </body>
