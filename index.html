@@ -4,16 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MyMeteo</title>
-
-    <!-- Description SEO -->
     <meta name="description" content="Application météo simple, rapide et optimisée pour mobile.">
-
-    <!-- PWA -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#f6f9ff" id="meta-theme-color">
     <link rel="icon" href="icons/icon-192.png">
 
-    <!-- Styles -->
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -32,18 +27,10 @@
             </button>
         </header>
 
-        <!-- Formulaire de recherche -->
-        <form class="search" id="search-form" autocomplete="off">
-            <label for="city-input" class="visually-hidden">Ville</label>
-            <input id="city-input"
-                   type="search"
-                   placeholder="Entrez une ville (ex: Paris)"
-                   aria-required="true">
-
-            <button id="search-btn" type="submit">
-                Rechercher
-            </button>
-        </form>
+        <div class="search">
+            <input id="city-input" type="search" placeholder="Entrez une ville (ex: Paris)" aria-label="Ville">
+            <button id="search-btn">Rechercher</button>
+        </div>
 
         <div id="loading" class="hidden" role="status" aria-live="polite">
             Chargement…
