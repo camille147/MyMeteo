@@ -7,64 +7,82 @@
     <meta name="description" content="Application météo simple et rapide.">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#f6f9ff" id="meta-theme-color">
-    <link rel="icon" href="icons/icon-192.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-KyZXEAg3QhqLMpG8r+Knujsl5+5hb7x1Jq9Qk5FfS7p6jCz8F7Z9k5xL1I6k8CQ0L1p2Y+Hg4V8x5ZrXz3P7HA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="styles.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gray-100 text-gray-900 min-h-screen flex items-center justify-center p-4">
 
-<div class="main-wrapper">
-    <main class="weather-card">
+<div class="main-wrapper w-full max-w-md mx-auto">
+    <main class="weather-card bg-white rounded-2xl shadow-xl p-6 space-y-6">
 
-        <header class="app-header">
-            <h1>MyMeteo</h1>
+
+        <header class="app-header flex items-center justify-between mb-2">
+            <h1 class="text-3xl font-bold">MyMeteo</h1>
+
             <button id="theme-toggle"
                     aria-label="Changer le thème"
-                    aria-pressed="false">
+                    aria-pressed="false"
+                    class="text-2xl p-2 rounded-full hover:bg-gray-200 transition">
                 <span aria-hidden="true">🌙</span>
             </button>
         </header>
 
-        <!-- Formulaire de recherche -->
-        <div class="search">
-            <input id="city-input" type="search" placeholder="Entrez une ville (ex: Paris)" aria-label="Ville">
-            <button id="search-btn">Rechercher</button>
+        <div class="search flex gap-2">
+            <input id="city-input"
+                   type="search"
+                   placeholder="Entrez une ville (ex: Paris)"
+                   aria-label="Ville"
+                   class="flex-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+
+            <button id="search-btn"
+                    class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                Rechercher
+            </button>
         </div>
 
-        <!-- États (chargement / erreur) -->
-        <div id="loading" class="hidden" role="status" aria-live="polite">
+        <!-- Loading -->
+        <div id="loading"
+             class="hidden text-center text-gray-600"
+             role="status"
+             aria-live="polite">
             Chargement…
         </div>
 
+        <!-- Error -->
         <div id="error-message"
-             class="error hidden"
+             class="error hidden bg-red-100 text-red-800 p-3 rounded-lg text-sm"
              role="alert"
              aria-live="assertive">
         </div>
 
-        <!-- Résultats météo -->
-        <section id="weather-section" class="hidden results" aria-live="polite">
+        <!-- Results -->
+        <section id="weather-section"
+                 class="hidden results space-y-6"
+                 aria-live="polite">
 
-            <div class="summary">
+            <div class="summary space-y-4">
 
-                <div class="city-row">
-                    <div id="city-name" class="city">—</div>
+                <div class="city-row text-center">
+                    <div id="city-name" class="city text-2xl font-semibold">—</div>
                 </div>
 
-                <div class="temp-row">
-                    <div id="weather-icon" class="icon" aria-hidden="true">🌤️</div>
-                    <div id="temperature" class="temp">—°C</div>
+                <div class="temp-row flex items-center justify-center gap-4">
+                    <div id="weather-icon" class="icon text-5xl">🌤️</div>
+                    <div id="temperature" class="temp text-4xl font-bold">—°C</div>
                 </div>
 
-                <div class="meta">
-                    <div id="wind">—</div>
-                    <div id="humidity">—</div>
-                    <div id="feels-like">—</div>
+                <div class="meta grid grid-cols-1 sm:grid-cols-3 text-center gap-2">
+                    <div id="wind" class="p-2 bg-gray-100 rounded-lg">—</div>
+                    <div id="humidity" class="p-2 bg-gray-100 rounded-lg">—</div>
+                    <div id="feels-like" class="p-2 bg-gray-100 rounded-lg">—</div>
                 </div>
             </div>
 
-            <div class="hourly">
-                <h2>Prochaines heures</h2>
-                <div id="hourly-list" class="hourly-list"></div>
+            <div class="hourly space-y-3">
+                <h2 class="text-xl font-semibold">Prochaines heures</h2>
+                <div id="hourly-list" class="hourly-list grid grid-cols-3 sm:grid-cols-4 gap-3"></div>
             </div>
 
         </section>
@@ -72,7 +90,6 @@
 </div>
 
 <script src="app.js" defer></script>
-
 
 </body>
 </html>
