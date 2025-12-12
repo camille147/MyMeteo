@@ -97,42 +97,7 @@ async function registerServiceWorker() {
 //    saveFavorites();
 //}
 
-function renderFavorites() {
-    elements.favoritesList.innerHTML = '';
 
-    if (favorites.length === 0) {
-        elements.noFavoritesMsg.classList.remove('hidden');
-    } else {
-        elements.noFavoritesMsg.classList.add('hidden');
-
-        favorites.forEach(city => {
-            const li = document.createElement('li');
-            li.innerHTML = `
-                <span>${city.name.split(',')[0]}</span>
-                <button class="delete-fav" title="Supprimer">✕</button>
-            `;
-
-            // Clic sur le nom -> charge la ville
-            li.querySelector('span').addEventListener('click', () => {
-                loadFavoriteCity(city);
-            });
-
-            // Clic sur supprimer -> supprime le favori
-            li.querySelector('.delete-fav').addEventListener('click', (e) => {
-                e.stopPropagation();
-                favorites = favorites.filter(f => f.name !== city.name);
-                saveFavorites();
-                // Si c'est la ville en cours, reset l'icône
-                if (currentCity && currentCity.name === city.name) {
-                    elements.favoriteBtn.textContent = '🤍';
-                    elements.favoriteBtn.classList.remove('active');
-                }
-            });
-
-            elements.favoritesList.appendChild(li);
-        });
-    }
-}
 
 async function loadFavoriteCity(city) {
     elements.cityInput.value = city.name.split(',')[0];
