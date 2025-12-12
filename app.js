@@ -36,7 +36,7 @@ let currentCity = null;
 document.addEventListener('DOMContentLoaded', () => {
     registerServiceWorker();
     initTheme();
-    loadFavorites();
+    //loadFavorites();
 
     // Écouteurs UI
     elements.searchBtn?.addEventListener('click', handleSearch);
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     elements.themeToggle?.addEventListener('click', toggleTheme);
-    elements.favoriteBtn?.addEventListener('click', toggleFavorite);
+    //elements.favoriteBtn?.addEventListener('click', toggleFavorite);
 });
 
 // ===== Service Worker =====
