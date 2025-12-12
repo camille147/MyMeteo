@@ -25,14 +25,10 @@
         </header>
 
         <!-- Formulaire de recherche -->
-        <form class="search" id="search-form" autocomplete="off">
-            <label for="city-input" class="visually-hidden">Ville</label>
-            <input id="city-input"
-                   type="search"
-                   placeholder="Entrez une ville (ex: Paris)"
-                   aria-required="true">
-            <button id="search-btn" type="submit">Rechercher</button>
-        </form>
+        <div class="search">
+            <input id="city-input" type="search" placeholder="Entrez une ville (ex: Paris)" aria-label="Ville">
+            <button id="search-btn">Rechercher</button>
+        </div>
 
         <!-- États (chargement / erreur) -->
         <div id="loading" class="hidden" role="status" aria-live="polite">
