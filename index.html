@@ -2,48 +2,89 @@
 <html lang="fr">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MyMeteo</title>
+
+    <!-- Description SEO -->
+    <meta name="description" content="Application météo simple, rapide et optimisée pour mobile.">
+
+    <!-- PWA -->
     <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="styles.css">
     <meta name="theme-color" content="#f6f9ff" id="meta-theme-color">
+    <link rel="icon" href="icons/icon-192.png">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 <div class="main-wrapper">
-    <main class="weather-card">
+
+    <main class="weather-card" role="main">
+
+        <!-- En-tête -->
         <header class="app-header">
             <h1>MyMeteo</h1>
-            <button id="theme-toggle" aria-label="Changer le thème">🌙</button>
+            <button id="theme-toggle"
+                    aria-label="Changer le thème"
+                    aria-pressed="false">
+                <span aria-hidden="true">🌙</span>
+            </button>
         </header>
 
-        <div class="search">
-            <input id="city-input" type="search" placeholder="Entrez une ville (ex: Paris)" aria-label="Ville">
-            <button id="search-btn">Rechercher</button>
+        <!-- Formulaire de recherche -->
+        <form class="search" id="search-form" autocomplete="off">
+            <label for="city-input" class="visually-hidden">Ville</label>
+            <input id="city-input"
+                   type="search"
+                   placeholder="Entrez une ville (ex: Paris)"
+                   aria-required="true">
+
+            <button id="search-btn" type="submit">
+                Rechercher
+            </button>
+        </form>
+
+        <div id="loading" class="hidden" role="status" aria-live="polite">
+            Chargement…
         </div>
 
-        <div id="loading" class="hidden">Chargement…</div>
-        <div id="error-message" class="error hidden" role="alert"></div>
+        <div id="error-message"
+             class="error hidden"
+             role="alert"
+             aria-live="assertive">
+        </div>
 
-        <section id="weather-section" class="hidden results">
+        <section id="weather-section" class="hidden results" aria-live="polite">
+
             <div class="summary">
-                <div class="city-row">
-                    <div id="city-name" class="city">-</div>
 
-                </div>
+                <h2 id="city-name" class="city">—</h2>
 
                 <div class="temp-row">
-                    <div id="weather-icon" class="icon">🌤️</div>
-                    <div id="temperature" class="temp">--°C</div>
+                    <div id="weather-icon" class="icon" aria-hidden="true">🌤️</div>
+                    <div id="temperature" class="temp">—°C</div>
                 </div>
-                <div class="meta">
-                    <div id="wind"></div>
-                    <div id="humidity"></div>
-                    <div id="feels-like"></div>
-                </div>
+
+                <!-- Informations biométriques sous forme de liste de définitions -->
+                <dl class="meta">
+                    <div>
+                        <dt>Vent</dt>
+                        <dd id="wind">—</dd>
+                    </div>
+                    <div>
+                        <dt>Humidité</dt>
+                        <dd id="humidity">—</dd>
+                    </div>
+                    <div>
+                        <dt>Ressenti</dt>
+                        <dd id="feels-like">—</dd>
+                    </div>
+                </dl>
             </div>
 
             <div class="hourly">
-                <h2>Prochaines heures</h2>
+                <h3>Prochaines heures</h3>
                 <div id="hourly-list" class="hourly-list"></div>
             </div>
         </section>
@@ -51,6 +92,6 @@
 
 </div>
 
-<script src="app.js"></script>
+
 </body>
 </html>
